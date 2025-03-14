@@ -4,20 +4,21 @@ version '1.0-SNAPSHOT'
 buildscript {
     ext.kotlin_version = '1.7.20'
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.0-rc02'
+        classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
-        mavenCentral()
         google()
+        mavenCentral()
+        maven { url 'https://maven.google.com' } // Ensure Google Maven Repository is included
     }
 }
 
@@ -25,24 +26,26 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace "com.dhanvantech.patientapp"
-    compileSdkVersion 32
+    namespace "co.paystack.flutterpaystack"  // ✅ Correct namespace
+    compileSdkVersion 34  // ✅ Update compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion 21  // ✅ Increase minSdkVersion to avoid old device issues
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 21
+        versionName "3.0.10"
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    defaultConfig {
-        minSdkVersion 16
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionCode 21
-        versionName "3.0.10"
-    }
     lintOptions {
         disable 'InvalidPackage'
     }
 }
 
 dependencies {
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.9.0' // ✅ Updated Material Design Library
 }
+
